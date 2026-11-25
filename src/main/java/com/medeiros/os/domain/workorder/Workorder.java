@@ -28,7 +28,10 @@ public class Workorder {
 
     private String title;
     private String description;
+
+    @Enumerated(EnumType.STRING)
     private Priority priority;
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @ManyToOne
