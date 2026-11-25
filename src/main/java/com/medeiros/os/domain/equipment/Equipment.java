@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity
 @Table(name="event")
 @Getter
@@ -21,7 +23,7 @@ public class Equipment {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private UUID id;
 
     private String code;
     private String name;

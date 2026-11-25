@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "workorder")
@@ -23,7 +24,7 @@ public class Workorder {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private UUID id;
 
     private String title;
     private String description;
