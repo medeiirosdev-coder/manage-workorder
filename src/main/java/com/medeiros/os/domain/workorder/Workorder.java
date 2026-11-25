@@ -32,6 +32,7 @@ public class Workorder {
     private Status status;
 
     @ManyToOne
+    @JoinColumn(name = "equipment_id")
     private Equipment equipment;
 
     private LocalDateTime createdAt;
