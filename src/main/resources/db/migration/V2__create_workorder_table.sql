@@ -7,9 +7,9 @@ CREATE TABLE workorder (
     description VARCHAR(600) NOT NULL,
     priority VARCHAR(20) NOT NULL,
     status VARCHAR(30) NOT NULL,
-    createdAt TIMESTAMP NOT NULL,
-    endDate TIMESTAMP NOT NULL,
-    equipment_id UUID,
-    FOREIGN KEY (equipment_id) REFERENCES equipment(id) ON DELETE CASCADE
+    created_at TIMESTAMP NOT NULL,
+    closed_at TIMESTAMP NOT NULL,
+    equipment_id UUID NOT NULL,
+    FOREIGN KEY (equipment_id) REFERENCES equipment(id)
 
 );
