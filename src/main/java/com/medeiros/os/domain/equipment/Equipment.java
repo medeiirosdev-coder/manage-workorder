@@ -13,7 +13,7 @@ import lombok.Setter;
 import java.util.UUID;
 
 @Entity
-@Table(name="event")
+@Table(name="equipment")
 @Getter
 @Setter
 @AllArgsConstructor
