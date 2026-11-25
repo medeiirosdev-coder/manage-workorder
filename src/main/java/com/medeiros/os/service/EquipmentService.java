@@ -1,25 +1,37 @@
 package com.medeiros.os.service;
 
 
-import com.medeiros.os.controller.equipment.EquipmentRequestDTO;
-import com.medeiros.os.controller.equipment.EquipmentResponseDTO;
+import com.medeiros.os.dto.equipment.EquipmentRequestDTO;
+import com.medeiros.os.dto.equipment.EquipmentResponseDTO;
+import com.medeiros.os.domain.equipment.Equipment;
 import com.medeiros.os.exceptions.CodeAlreadyExistsException;
 import com.medeiros.os.repository.EquipmentRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class EquipmentService {
 
-    @Autowired
-    private EquipmentRepository equipmentRepository;
+    private final EquipmentRepository equipmentRepository;
 
-    public EquipmentResponseDTO createEquipment(EquipmentRequestDTO equipmentRequestDTO){
+    public EquipmentResponseDTO createEquipment(EquipmentRequestDTO requestDTO){
 
-        if (equipmentRepository.existsByCode(equipmentRequestDTO.code())){
-            throw new CodeAlreadyExistsException("Equipment of code " + equipmentRequestDTO.code() + " already exists");
+        if (equipmentRepository.existsByCode(requestDTO.code())){
+            throw new CodeAlreadyExistsException("Equipment of code " + requestDTO.code() + " already exists");
         }
 
+
+        Equipment newEquipment = new Equipment();
+        newEquipment.setCode(requestDTO.code());
+        newEquipment.setName(requestDTO.name());
+        newEquipment.setLocal(requestDTO.local());
+        newEquipment.setActive(requestDTO.active());
+
+        equipmentRepository.save(newEquipment);
+
+        return new EquipmentResponseDTO(newEquipment.getId(), newEquipment.getCode(), newEquipment.getName(), newEquipment.getLocal(), newEquipment.getActive());
 
 
 
