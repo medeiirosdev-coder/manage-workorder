@@ -1,4 +1,4 @@
-package com.medeiros.os.controller.equipment;
+package com.medeiros.os.dto.equipment;
 
 import java.util.UUID;
 
