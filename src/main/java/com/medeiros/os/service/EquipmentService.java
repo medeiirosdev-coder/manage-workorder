@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class EquipmentService {
@@ -44,6 +46,15 @@ public class EquipmentService {
 
 
         return this.toResponseDTO(equipment);
+
+    }
+
+    public List<EquipmentResponseDTO> findAll(){
+
+        return equipmentRepository.findAll()
+                .stream()
+                .map(this::toResponseDTO)
+                .toList();
 
     }
 
