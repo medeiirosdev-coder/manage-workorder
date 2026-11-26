@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -15,6 +17,12 @@ public class EquipmentController {
 
     private final EquipmentService equipmentService;
 
+    @GetMapping("/equipments")
+    public ResponseEntity<List<EquipmentResponseDTO>> findAll(){
+
+        return ResponseEntity.ok(equipmentService.findAll());
+
+    }
 
     @GetMapping("/equipment/{code}")
     public ResponseEntity<EquipmentResponseDTO> findEquipment(@PathVariable String code){
@@ -30,8 +38,6 @@ public class EquipmentController {
 
 
     }
-
-
 
 
 }
