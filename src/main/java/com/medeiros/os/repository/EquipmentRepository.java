@@ -8,5 +8,5 @@ import java.util.UUID;
 public interface EquipmentRepository extends JpaRepository<Equipment, UUID> {
 
     boolean existsByCode(String code);
-
+    Equipment findByCode(String code);
 }
