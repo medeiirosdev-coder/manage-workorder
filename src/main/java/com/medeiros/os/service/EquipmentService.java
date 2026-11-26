@@ -32,28 +32,22 @@ public class EquipmentService {
 
         equipmentRepository.save(newEquipment);
 
-        return new EquipmentResponseDTO(newEquipment.getId(), newEquipment.getCode(), newEquipment.getName(), newEquipment.getLocal(), newEquipment.getActive());
+        return toResponseDTO(newEquipment);
 
 
     }
 
     public EquipmentResponseDTO findEquipment(String code){
 
-        if (!equipmentRepository.existsByCode(code)){
-
-            throw new CodeNotExistsException("Equipment with code " + code + " does not exists!");
-
-        }
-
-        Equipment equipment = equipmentRepository.findByCode(code);
+        Equipment equipment = equipmentRepository.findByCode(code)
+                .orElseThrow(() -> new CodeNotExistsException("Equipment with code " + code + " does not exist!"));
 
 
-        return this.toDTO(equipment);
-
+        return this.toResponseDTO(equipment);
 
     }
 
-    public EquipmentResponseDTO toDTO(Equipment equipment){
+    public EquipmentResponseDTO toResponseDTO(Equipment equipment){
 
         return new EquipmentResponseDTO(equipment.getId(), equipment.getCode(),equipment.getName(),equipment.getLocal(),equipment.getActive());
 
