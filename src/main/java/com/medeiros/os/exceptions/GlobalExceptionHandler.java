@@ -46,14 +46,7 @@ public class GlobalExceptionHandler {
     }
 
     private ResponseEntity<ApiError> buildError(HttpStatus status, String message, HttpServletRequest request) {
-        ApiError body = new ApiError(
-                Instant.now(),
-                status.value(),
-                status.getReasonPhrase(),
-                message,
-                request.getRequestURI()
-        );
-        return ResponseEntity.status(status).body(body);
+        return buildError(status, message, request, List.of());
     }
 
 }
