@@ -6,9 +6,7 @@ import com.medeiros.os.dto.equipment.EquipmentResponseDTO;
 import com.medeiros.os.service.EquipmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -18,13 +16,22 @@ public class EquipmentController {
     private final EquipmentService equipmentService;
 
 
-    @PostMapping("/equipamentos")
-    public ResponseEntity<EquipmentResponseDTO> createEquipment(EquipmentRequestDTO requestDTO){
+    @GetMapping("/equipment/{code}")
+    public ResponseEntity<EquipmentResponseDTO> findEquipment(@PathVariable String code){
+
+        return ResponseEntity.ok(equipmentService.findEquipment(code));
+
+    }
+
+    @PostMapping("/equipment")
+    public ResponseEntity<EquipmentResponseDTO> createEquipment(@RequestBody EquipmentRequestDTO requestDTO){
 
         return ResponseEntity.ok(equipmentService.createEquipment(requestDTO));
 
 
     }
+
+
 
 
 }
