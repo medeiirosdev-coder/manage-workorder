@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +24,28 @@ public class WorkorderService {
 
     private final WorkorderRepository workorderRepository;
     private final EquipmentService equipmentService;
+
+
+    public List<WorkorderResponseDTO> fetchWOsOptStatus(Status status){
+
+        if (status == null){
+
+            return workorderRepository
+                    .findAll()
+                    .stream()
+                    .map(this::workorderToDTO)
+                    .toList();
+
+        }
+
+        return workorderRepository
+                .findAll()
+                .stream()
+                .filter(workorder -> workorder.getStatus().equals(status))
+                .map(this::workorderToDTO)
+                .toList();
+
+    }
 
     public WorkorderResponseDTO createWO(WorkorderRequestDTO woRequestDTO){
 
@@ -62,6 +85,8 @@ public class WorkorderService {
         return new Equipment(equipmentResponseDTO.id(), equipmentResponseDTO.code(), equipmentResponseDTO.name(),equipmentResponseDTO.local(),equipmentResponseDTO.active());
 
     }
+
+
 
 
 
