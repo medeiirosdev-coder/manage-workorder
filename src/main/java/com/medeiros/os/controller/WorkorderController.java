@@ -3,6 +3,7 @@ package com.medeiros.os.controller;
 import com.medeiros.os.dto.workorder.WorkorderRequestDTO;
 import com.medeiros.os.dto.workorder.WorkorderResponseDTO;
 import com.medeiros.os.service.WorkorderService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class WorkorderController {
     private final WorkorderService workorderService;
 
     @PostMapping("/workorders")
-    public ResponseEntity<WorkorderResponseDTO> createWO(@RequestBody WorkorderRequestDTO woRequestDTO){
+    public ResponseEntity<WorkorderResponseDTO> createWO(@RequestBody @Valid WorkorderRequestDTO woRequestDTO){
 
         return ResponseEntity.ok(workorderService.createWO(woRequestDTO));
 
