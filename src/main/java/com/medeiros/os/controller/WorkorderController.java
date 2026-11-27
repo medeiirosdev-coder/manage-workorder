@@ -41,4 +41,11 @@ public class WorkorderController {
 
     }
 
+    @PatchMapping("/{id}/start")
+    public ResponseEntity<WorkorderResponseDTO> startWO(@PathVariable UUID id){
+
+        return ResponseEntity.ok(workorderService.startWO(id));
+
+    }
+
 }
