@@ -8,6 +8,7 @@ import com.medeiros.os.dto.workorder.WorkorderRequestDTO;
 import com.medeiros.os.dto.workorder.WorkorderResponseDTO;
 
 import com.medeiros.os.enums.Status;
+import com.medeiros.os.exceptions.CantStartWOException;
 import com.medeiros.os.exceptions.EquipmentInactiveException;
 import com.medeiros.os.exceptions.WoIDNotExistsException;
 import com.medeiros.os.repository.WorkorderRepository;
@@ -34,6 +35,26 @@ public class WorkorderService {
                 .orElseThrow(() -> new WoIDNotExistsException("Does not have a work order created with this ID " + id));
 
         return workorderToDTO(wo);
+
+    }
+
+    public WorkorderResponseDTO startWO(UUID id){
+
+        Workorder workorder = workorderRepository.findById(id)
+                .orElseThrow(() -> new WoIDNotExistsException("Does not have a work order created with this ID " + id));
+
+        if (workorder.getStatus() != Status.OPEN){
+
+            throw new CantStartWOException("The status of work order must be OPEN to start.\nActual status: " + workorder.getStatus());
+
+        }
+
+        workorder.setStatus(Status.EMAND);
+
+        workorderRepository.save(workorder);
+
+        return workorderToDTO(workorder);
+
 
     }
 
