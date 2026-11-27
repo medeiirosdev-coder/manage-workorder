@@ -9,6 +9,7 @@ import com.medeiros.os.dto.workorder.WorkorderResponseDTO;
 
 import com.medeiros.os.enums.Status;
 import com.medeiros.os.exceptions.EquipmentInactiveException;
+import com.medeiros.os.exceptions.WoIDNotExistsException;
 import com.medeiros.os.repository.WorkorderRepository;
 import jakarta.persistence.*;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +27,15 @@ public class WorkorderService {
     private final WorkorderRepository workorderRepository;
     private final EquipmentService equipmentService;
 
+
+    public WorkorderResponseDTO findById(UUID id){
+
+        Workorder wo = workorderRepository.findById(id)
+                .orElseThrow(() -> new WoIDNotExistsException("Does not have a work order created with this ID " + id));
+
+        return workorderToDTO(wo);
+
+    }
 
     public List<WorkorderResponseDTO> fetchWOsOptStatus(Status status){
 
