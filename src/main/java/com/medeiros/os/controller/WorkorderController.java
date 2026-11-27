@@ -18,14 +18,14 @@ public class WorkorderController {
 
     private final WorkorderService workorderService;
 
-    @PostMapping("/workorders")
+    @PostMapping
     public ResponseEntity<WorkorderResponseDTO> createWO(@RequestBody @Valid WorkorderRequestDTO woRequestDTO){
 
         return ResponseEntity.ok(workorderService.createWO(woRequestDTO));
 
     }
 
-    @GetMapping("/workorders")
+    @GetMapping
     public ResponseEntity<List<WorkorderResponseDTO>> fetchWOsOptStatus(@RequestParam (required = false) Status status){
 
         return ResponseEntity.ok(workorderService.fetchWOsOptStatus(status));
