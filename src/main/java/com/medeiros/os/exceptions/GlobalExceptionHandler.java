@@ -47,6 +47,13 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(EquipmentInactiveException.class)
+    public ResponseEntity<ApiError> handleEquipmentInactive(EquipmentInactiveException ex, HttpServletRequest request){
+
+        return buildError(HttpStatus.UNPROCESSABLE_CONTENT, ex.getMessage(), request);
+
+    }
+
     private ResponseEntity<ApiError> buildError(HttpStatus status, String message, HttpServletRequest request) {
         return buildError(status, message, request, List.of());
     }
