@@ -59,6 +59,11 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(CantStartWOException.class)
+    public ResponseEntity<ApiError> handleStartWO(CantStartWOException ex, HttpServletRequest request){
+        return buildError(HttpStatus.BAD_REQUEST,ex.getMessage(), request);
+    }
+
     @ExceptionHandler(EquipmentInactiveException.class)
     public ResponseEntity<ApiError> handleEquipmentInactive(EquipmentInactiveException ex, HttpServletRequest request){
 
