@@ -33,4 +33,11 @@ public class WorkorderController {
 
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<WorkorderResponseDTO> findById(@PathVariable UUID id){
+
+        return ResponseEntity.ok(workorderService.findById(id));
+
+    }
+
 }
