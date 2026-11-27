@@ -8,6 +8,7 @@ import com.medeiros.os.dto.workorder.WorkorderRequestDTO;
 import com.medeiros.os.dto.workorder.WorkorderResponseDTO;
 
 import com.medeiros.os.enums.Status;
+import com.medeiros.os.exceptions.CantConcludeWOException;
 import com.medeiros.os.exceptions.CantStartWOException;
 import com.medeiros.os.exceptions.EquipmentInactiveException;
 import com.medeiros.os.exceptions.WoIDNotExistsException;
@@ -45,12 +46,33 @@ public class WorkorderService {
 
         if (workorder.getStatus() != Status.OPEN){
 
-            throw new CantStartWOException("The status of work order must be OPEN to start.\nActual status: " + workorder.getStatus());
+            throw new CantStartWOException("The status of work order must be OPEN to start. Actual status: " + workorder.getStatus());
 
         }
 
         workorder.setStatus(Status.EMAND);
 
+        workorderRepository.save(workorder);
+
+        return workorderToDTO(workorder);
+
+
+    }
+
+
+    public WorkorderResponseDTO concludeWO(UUID id){
+
+        Workorder workorder = workorderRepository.findById(id)
+                .orElseThrow(() -> new WoIDNotExistsException("Does not have a work order created with this ID " + id));
+
+        if (workorder.getStatus() != Status.OPEN){
+
+            throw new CantConcludeWOException("The status of work order must be EMAND to conclude. Actual status: " + workorder.getStatus());
+
+        }
+
+        workorder.setStatus(Status.CONC);
+        workorder.setClosedAt(LocalDateTime.now());
         workorderRepository.save(workorder);
 
         return workorderToDTO(workorder);
