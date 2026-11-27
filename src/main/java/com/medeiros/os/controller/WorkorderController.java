@@ -48,4 +48,11 @@ public class WorkorderController {
 
     }
 
+    @PatchMapping("/{id}/conclude")
+    public ResponseEntity<WorkorderResponseDTO> concludeWO(@PathVariable UUID id){
+
+        return ResponseEntity.ok(workorderService.concludeWO(id));
+
+    }
+
 }
